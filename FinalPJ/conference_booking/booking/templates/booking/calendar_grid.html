@@ -1,0 +1,49 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}ปฏิทินจองห้องประชุม - {{ month_name }} {{ year }}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">🗓️ ปฏิทินเดือน {{ month_name }} {{ year }}</h2>
+
+<table class="table table-bordered text-center align-middle">
+    <thead class="table-secondary">
+        <tr>
+            <th class="text-danger">อา.</th>
+            <th>จ.</th>
+            <th>อ.</th>
+            <th>พ.</th>
+            <th>พฤ.</th>
+            <th>ศ.</th>
+            <th class="text-primary">ส.</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for week in calendar_matrix %}
+    <tr>
+        {% for day in week %}
+           {% if day %}
+    <td>
+        {{ day.day }}
+        {% if day|date:"Y-m-d" in bookings_by_day %}
+            <span class="badge bg-danger">❌ มีการจอง</span>
+        {% else %}
+            <span class="badge bg-success">✅ ว่าง</span>
+        {% endif %}
+        <a href="{% url 'book_room' %}?date={{ day|date:'Y-m-d' }}" class="btn btn-sm btn-outline-primary mt-2">จอง</a>
+    </td>
+{% else %}
+    <td></td>
+{% endif %}
+
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</tbody>
+
+</table>
+
+<div class="mt-4">
+    <a href="{% url 'calendar_grid' year=prev_year month=prev_month %}" class="btn btn-secondary">← เดือนก่อน</a>
+    <a href="{% url 'calendar_grid' year=next_year month=next_month %}" class="btn btn-secondary float-end">เดือนถัดไป →</a>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'booking/base.html' %}
+
+{% block content %}
+    <h1>ห้องประชุมที่พร้อมใช้งาน</h1>
+    <div class="row">
+        {% for room in rooms %}
+            <div class="col-md-4">
+                <div class="card p-3 mb-4 shadow-sm">
+                    <div class="card-body">
+                       <h5 class="card-title">{{ room.name }}</h5>
+            <p class="card-text">สถานที่: {{ room.location }}</p>
+                        <a href="{% url 'room_detail' room.id %}" class="btn btn-primary">ดูรายละเอียด</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

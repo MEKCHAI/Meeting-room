@@ -1,0 +1,40 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}ระบบจองห้องประชุม - ปฏิทิน{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📅 ระบบจองห้องประชุม - ปี {{ year }}</h2>
+
+<div class="row row-cols-2 row-cols-md-4 g-3">
+    {% for month in months %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ month.1 }}</h5>
+                    
+                    <a href="{% url 'calendar_grid' year=year month=month.0 %}" class="btn btn-outline-secondary btn-sm w-100">
+                        📅 ดูแบบตาราง
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+<div class="mt-4">
+    {% if user.is_authenticated %}
+        <div class="alert alert-success mt-4">
+            👋 สวัสดี {{ user.username }}
+        </div>
+        <p>
+            <a href="{% url 'book_room' %}" class="btn btn-success me-2">➕ ไปหน้าจองห้องประชุม</a>
+            <a href="{% url 'room_list' %}" class="btn btn-outline-dark">📋 ดูรายการห้องประชุม</a>
+        </p>
+    {% else %}
+        <div class="alert alert-warning mt-4">
+            🔐 กรุณา <a href="{% url 'login' %}">เข้าสู่ระบบ</a> หรือ <a href="{% url 'register' %}">สมัครสมาชิก</a> เพื่อใช้งานระบบ
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

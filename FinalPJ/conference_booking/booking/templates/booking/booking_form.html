@@ -1,0 +1,40 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}จองห้องประชุม{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📝 ฟอร์มจองห้องประชุม</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<form method="post" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_room" class="form-label">ห้องประชุม</label>
+        {{ form.room }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_date" class="form-label">วันที่</label>
+        {{ form.date }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_start_time" class="form-label">เวลาเริ่มต้น</label>
+        {{ form.start_time }}
+    </div>
+
+    <div class="mb-3">
+        <label for="id_end_time" class="form-label">เวลาสิ้นสุด</label>
+        {{ form.end_time }}
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">✅ ยืนยันการจอง</button>
+</form>
+
+<a href="{% url 'calendar' %}" class="btn btn-link mt-3">← กลับปฏิทิน</a>
+{% endblock %}

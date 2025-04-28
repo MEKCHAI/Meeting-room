@@ -1,0 +1,28 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}ปฏิทินรายเดือน{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{{ month_name }} {{ year }}</h1>
+
+<div class="list-group">
+    {% for day in days %}
+        <div class="list-group-item">
+            <strong>📅 วันที่ {{ day }}</strong><br>
+            {% if day in bookings_by_day %}
+                <ul class="mt-2">
+                    {% for booking in bookings_by_day.day %}
+                        <li>❌ {{ booking.room.name }} ({{ booking.start_time }} - {{ booking.end_time }})</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'book_room' %}?date={{ year }}-{{ month|stringformat:"02d" }}-{{ day|stringformat:"02d" }}" class="btn btn-outline-primary btn-sm mt-2">จองห้องอื่น</a>
+            {% else %}
+                ✅ ว่างทั้งหมด - 
+                <a href="{% url 'book_room' %}?date={{ year }}-{{ month|stringformat:"02d" }}-{{ day|stringformat:"02d" }}" class="btn btn-success btn-sm">จองห้อง</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<a href="{% url 'calendar' %}" class="btn btn-link mt-4">← กลับหน้าหลัก</a>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{{ title }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">💾 บันทึก</button>
+    <a href="{% url 'room_list' %}" class="btn btn-secondary">↩️ ย้อนกลับ</a>
+</form>
+{% endblock %}

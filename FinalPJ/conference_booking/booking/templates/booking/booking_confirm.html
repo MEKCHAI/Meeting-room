@@ -1,0 +1,21 @@
+{% extends 'booking/base.html' %}
+{% block title %}ยืนยันการจอง{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">✅ ยืนยันข้อมูลการจอง</h2>
+
+<ul class="list-group mb-4">
+    <li class="list-group-item">ห้อง: <strong>{{ booking.room }}</strong></li>
+    <li class="list-group-item">วันที่: <strong>{{ booking.date }}</strong></li>
+    <li class="list-group-item">เวลา: <strong>{{ booking.start_time }} - {{ booking.end_time }}</strong></li>
+</ul>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for key, value in form_data.items %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <button type="submit" name="confirm" class="btn btn-success">✅ ยืนยันการจอง</button>
+    <a href="{% url 'book_room' %}" class="btn btn-secondary">↩️ กลับไปแก้ไข</a>
+</form>
+{% endblock %}

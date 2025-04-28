@@ -1,0 +1,29 @@
+{% extends 'booking/base.html' %}
+
+{% block title %}การจองของฉัน{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📅 การจองของฉัน</h2>
+
+{% if bookings %}
+    <ul class="list-group">
+        {% for booking in bookings %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ booking.room.name }}</strong><br>
+                    วันที่: {{ booking.date }}<br>
+                    เวลา: {{ booking.start_time|time:"H:i" }} - {{ booking.end_time|time:"H:i" }}
+                </div>
+                <div>
+                    <form method="post" action="{% url 'cancel_booking' booking.id %}" onsubmit="return confirm('ยืนยันการยกเลิกการจอง?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">❌ ยกเลิก</button>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>คุณยังไม่มีการจองใด ๆ</p>
+{% endif %}
+{% endblock %}
